@@ -11,10 +11,12 @@
 }
 .addGoods{
     background-color:#D1637E;
-
+    min-height: 200px;
+    margin: 10px 0 10px 0;
 }
 .cardItem{
-    min-height: 100px;
+    min-height: 200px;
     border:3px groove #0F0A35;
     background-color:#7FCC6C;
+    margin: 10px 0 10px 0;
 }

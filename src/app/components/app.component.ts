@@ -29,22 +29,26 @@ import { Component, OnInit } from '@angular/core';
 		</div>
 		
 		
-		<div   class="col-md-6"style=" background-color:#CECCE0;" >
+		<div   class="col-md-8"style=" background-color:#CECCE0;" >
 			<div class="container" container>
+			Select Shop ID: {{activeShop?.id}}  Name {{activeShop?.name}}
 				<div  class="row">
 					<div  class="col-md-4" *ngFor="let item of items" >
 						<div class='cardItem'>
 							item.name {{item.name}}
 							item.description {{item.description}}
+							<button  (click)="onRedactItems(item)" >redactShop</button>
+							<button  (click)="onDeleteItem(item)" >onDelete</button>
 						</div>
-						<button  (click)="onRedactItems(item)" >redactShop</button>
 						<div  class="redactItem" *ngIf="redactItem==item">
 							<input [(ngModel)]="redactItem.name"  placeholder="enter name" />
 							<input [(ngModel)]="redactItem.description"  placeholder="enter description" />
 							<button  (click)="onCloseItemRedact()" >close</button>
 						</div>
 					</div>
-					<div class="addGoods" *ngIf='activeShop' (click)="addGoods()">add item</div>	
+					<div class="col-md-4">
+						<div class="addGoods" *ngIf='activeShop' (click)="addGoods()">add item</div>	
+					</div>
 				</div>
 			</div>	
 		</div>
@@ -105,6 +109,15 @@ export class AppComponent {
 		var pos = this.shops.indexOf(shop);
 		this.shops.splice(pos, 1);
 	}
+	onDeleteItem(item:any){
+	this.shops.forEach((it,i,arr)=>{
+			if (this.activeShop==it){
+				var pos = 	this.shops[i].items.indexOf(item);
+				this.shops[i].items.splice(pos, 1);
+			}
+		}) 
+	}
+	 
 	initShop() {
 		this.shops.push({
 			"name": "shop1",
@@ -118,7 +131,7 @@ export class AppComponent {
 				"description": "good choise"
 			}]
 		}, {
-				"name": "shop1",
+				"name": "shop2",
 				"address": "parnilovay",
 				id: 2,
 				items:  [{
