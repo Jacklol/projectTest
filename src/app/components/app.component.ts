@@ -7,13 +7,15 @@ import { Component, OnInit } from '@angular/core';
  	<div class="row">
 		<div  class="col-md-4" >
 			shops
-			<button class='createShop' (click)="createShop()">Add Shop</button>
-			<div  *ngFor="let shop of shops" class="shop" (click)="chooseShop(shop)">
+			<button class='createShop' class='button black  medium' (click)="createShop()">Add Shop</button>
+			<div  *ngFor="let shop of shops" class="shop" 
+			[class.activeShop]="shop===activeShop"
+			(click)="chooseShop(shop)">
 				<div>ID  {{shop.id}}</div>
 				<div>shopname  {{shop.name}}</div>
 				<div>address  {{shop.address}}</div>
-				<button  (click)="onRedactShop(shop)" >redactShop</button>
-				<button  (click)="onDelete(shop)" >onDelete</button>
+				<button  (click)="onRedactShop(shop)"  class='button black small'>redactShop</button>
+				<button  (click)="onDelete(shop)"  class='button black small'>onDelete</button>
 				<div  class="redactShop" *ngIf="redactShop==shop">
 					redactShop
 					<div>
@@ -23,27 +25,27 @@ import { Component, OnInit } from '@angular/core';
 					<input [(ngModel)]="redactShop.address"  placeholder="enter address" />
 					{{redactShop.name}}
 					{{redactShop.address}}
-					<button  (click)="onClose()" >close</button>
+					<button  (click)="onClose()" class='button black small'>close</button>
 				</div>
 			</div>
 		</div>
 		
 		
 		<div   class="col-md-8"style=" background-color:#CECCE0;" >
-			<div class="container" container>
+			<div class="container-fluid" container>
 			Select Shop ID: {{activeShop?.id}}  Name {{activeShop?.name}}
 				<div  class="row">
 					<div  class="col-md-4" *ngFor="let item of items" >
 						<div class='cardItem'>
-							item.name {{item.name}}
-							item.description {{item.description}}
-							<button  (click)="onRedactItems(item)" >redactShop</button>
-							<button  (click)="onDeleteItem(item)" >onDelete</button>
+							<div>item.name {{item.name}}</div>
+							<div>item.description {{item.description}}</div>
+							<button  (click)="onRedactItems(item)" class='button black small'>redactShop</button>
+							<button  (click)="onDeleteItem(item)" class='button black small'>onDelete</button>
 						</div>
 						<div  class="redactItem" *ngIf="redactItem==item">
 							<input [(ngModel)]="redactItem.name"  placeholder="enter name" />
 							<input [(ngModel)]="redactItem.description"  placeholder="enter description" />
-							<button  (click)="onCloseItemRedact()" >close</button>
+							<button  (click)="onCloseItemRedact()" class='button black small'>close</button>
 						</div>
 					</div>
 					<div class="col-md-4">

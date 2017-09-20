@@ -1,6 +1,14 @@
 .shop{
-    background-color: #9A9BBB;
+    background-color: rgba(230, 231, 251, 0.73);
     border:3px groove #0F0A35;
+}
+.shop:hover{
+    background-color: rgba(166, 233, 170, 0.73);
+    border:3px groove #544CA8;
+}
+.activeShop{
+    background-color: rgba(44, 204, 52, 0.73);
+    border:3px groove #514F63;
 }
 .goods{
     background-color:#CECCE0;
