@@ -1,0 +1,20 @@
+.shop{
+    background-color: #9A9BBB;
+    border:3px groove #0F0A35;
+}
+.goods{
+    background-color:#CECCE0;
+}
+.item{
+    background-color: #7FCC6C;
+    border:3px groove #0F0A35;
+}
+.addGoods{
+    background-color:#D1637E;
+
+}
+.cardItem{
+    min-height: 100px;
+    border:3px groove #0F0A35;
+    background-color:#7FCC6C;
+}
