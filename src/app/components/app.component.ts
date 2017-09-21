@@ -8,25 +8,30 @@ import { Http, Headers, Response, URLSearchParams } from '@angular/http';
  <div class="container">
  	<div class="row">
 		<div  class="col-md-4" >
-			shops
-			<button class='createShop' class='button black  medium' (click)="createShop()">Add Shop</button>
+			<h1>Magic Shops</h1>
+			<button class='createShop' class='button green  medium' (click)="createShop()">Add Shop</button>
 			<ul [dragula]='"bag-one"'>
 				<li  *ngFor="let shop of shops" class="shop" 
 				[class.activeShop]="shop===activeShop" data-id="{{shop.id}}"
 				(click)="chooseShop(shop)">
-					<div>ID : {{shop.id}}</div>
-					<div>shop name : {{shop.name}}</div>
-					<div>address : {{shop.address}}</div>
-					<div>warkTime{{shop.warkTime}}</div>
-					<button  (click)="onRedactShop(shop)"  class='button black small'>redactShop</button>
-					<button  (click)="onDelete(shop)"  class='button black small'>delete</button>
+					<div *ngIf="redactShop!==shop"> 
+						<div>ID : {{shop.id}}</div>
+						<div>shop name : {{shop.name}}</div>
+						<div>address : {{shop.address}}</div>
+						<div>warkTime{{shop.warkTime}}</div>
+						<button  (click)="onRedactShop(shop)"  class='button black small'>Edit Shop</button>
+						<button  (click)="onDelete(shop)"  class='button red small'>Delete</button>
+					</div>
 					<div  class="redactShop" *ngIf="redactShop==shop">
 						redactShop
 						<div>
 							ID  	{{redactShop.id}}
 						</div>
+						<span>name</span>
 						<input [(ngModel)]="redactShop.name"  placeholder="enter name" />
+						<span>address</span>
 						<input [(ngModel)]="redactShop.address"  placeholder="enter address" />
+						<span>warkTime</span>
 						<input [(ngModel)]="shop.warkTime"  placeholder="enter warkTime" />
 						<button  (click)="onClose(shop)" class='button black small'>ok</button>
 					</div>
@@ -40,23 +45,24 @@ import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 				<div  class="row">
 					<div  class="col-md-4" *ngFor="let item of items" >
 						<div class='cardItem'>
-							<div> {{item.name}}</div>
-							<div> {{item.description}}</div>
-							<button  (click)="onRedactItems(item)" class='button black small'>RedactItem</button>
-							<button  (click)="onDeleteItem(item)" class='button black small'>Delete</button>
+							<div  *ngIf="redactItem!==item">
+								<div> {{item.name}}</div>
+								<div> {{item.description}}</div>
+								<button  (click)="onRedactItems(item)" class='button black small'>Edit</button>
+								<button  (click)="onDeleteItem(item)" class='button red small'>Delete</button>
+							</div>
 							<div  class="redactItem" *ngIf="redactItem==item">
 								<input [(ngModel)]="redactItem.name"  placeholder="enter name" />
 								<input [(ngModel)]="redactItem.description"  placeholder="enter description" />
-								<button  (click)="onCloseItemRedact()" class='button black small'>close</button>
+								<button  (click)="onCloseItemRedact()" class='button black small'>Close</button>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="addGoods" *ngIf='activeShop' >
-							<input [(ngModel)]="addItemName"  placeholder="enter name" />
-							<input [(ngModel)]="addItemDescription"  placeholder="enter description" />
-							add item
-							<button (click)="addGoods()">add Item</button>
+								<input required [(ngModel)]="addItemName"  placeholder="enter name" />
+								<input [(ngModel)]="addItemDescription"  placeholder="enter description" />
+								<button (click)="addGoods()" class='button green small'>Add</button>
 						</div>	
 					</div>
 				</div>
@@ -74,8 +80,8 @@ import { Http, Headers, Response, URLSearchParams } from '@angular/http';
   `, styleUrls: ["./css/app-component.css"]
 })
 export class AppComponent {
-	addItemName:string='';
-	addItemDescription:string='';
+	addItemName:string= "Name"; 
+	addItemDescription:string="Description";
 	lat: number;
 	lng: number;
 	address:string;
@@ -231,14 +237,18 @@ export class AppComponent {
 		});
 	}
 	addGoods(){
+		if (!this.addItemName){
+			
+			return
+		}
 		this.shops.forEach((item,i,arr)=>{
 			if (this.activeShop==item){
 				this.shops[i].items.push({
 					"name":this.addItemName,
 					"description":this.addItemDescription
 				})
-				this.addItemName="name "+this.shops[i].items.length;
-				this.addItemDescription="description "+this.shops[i].items.length;
+				this.addItemDescription= "Name"; 
+				this.addItemDescription= "Description"; 
 			}
 		}
 	)

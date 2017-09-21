@@ -19,7 +19,7 @@
     border:3px groove #0F0A35;
 }
 .addGoods{
-    background-color:#D1637E;
+    background-color:rgba(22, 42, 66, 0.96);
     min-height: 200px;
     margin: 10px 0 10px 0;
 }
@@ -29,6 +29,14 @@
     background-color:#7FCC6C;
     margin: 10px 0 10px 0;
 }
+
+
 agm-map {
     height: 300px;
   }
+  input{
+      width: 100%;
+  }
+ul{
+    padding-left: 0;
+}
