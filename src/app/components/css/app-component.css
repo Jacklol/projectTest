@@ -1,6 +1,7 @@
 .shop{
     background-color: rgba(230, 231, 251, 0.73);
     border:3px groove #0F0A35;
+    list-style-type: none;
 }
 .shop:hover{
     background-color: rgba(166, 233, 170, 0.73);
@@ -28,3 +29,6 @@
     background-color:#7FCC6C;
     margin: 10px 0 10px 0;
 }
+agm-map {
+    height: 300px;
+  }
