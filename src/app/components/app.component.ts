@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DragulaService } from 'ng2-dragula'
 
 @Component({
 	selector: 'my-app',
@@ -8,26 +9,29 @@ import { Component, OnInit } from '@angular/core';
 		<div  class="col-md-4" >
 			shops
 			<button class='createShop' class='button black  medium' (click)="createShop()">Add Shop</button>
-			<div  *ngFor="let shop of shops" class="shop" 
-			[class.activeShop]="shop===activeShop"
-			(click)="chooseShop(shop)">
-				<div>ID  {{shop.id}}</div>
-				<div>shopname  {{shop.name}}</div>
-				<div>address  {{shop.address}}</div>
-				<button  (click)="onRedactShop(shop)"  class='button black small'>redactShop</button>
-				<button  (click)="onDelete(shop)"  class='button black small'>onDelete</button>
-				<div  class="redactShop" *ngIf="redactShop==shop">
-					redactShop
-					<div>
-						ID  	{{redactShop.id}}
+			<ul [dragula]='"bag-one"'>
+				<li  *ngFor="let shop of shops" class="shop" 
+				[class.activeShop]="shop===activeShop" data-id="{{shop.id}}"
+				(click)="chooseShop(shop)">
+					<div>ID  {{shop.id}}</div>
+					<div>shopname  {{shop.name}}</div>
+					<div>address  {{shop.address}}</div>
+					<button  (click)="onRedactShop(shop)"  class='button black small'>redactShop</button>
+					<button  (click)="onDelete(shop)"  class='button black small'>onDelete</button>
+					<div  class="redactShop" *ngIf="redactShop==shop">
+						redactShop
+						<div>
+							ID  	{{redactShop.id}}
+						</div>
+						<input [(ngModel)]="redactShop.name"  placeholder="enter name" />
+						<input [(ngModel)]="redactShop.address"  placeholder="enter address" />
+						{{redactShop.name}}
+						{{redactShop.address}}
+						<button  (click)="onClose()" class='button black small'>close</button>
 					</div>
-					<input [(ngModel)]="redactShop.name"  placeholder="enter name" />
-					<input [(ngModel)]="redactShop.address"  placeholder="enter address" />
-					{{redactShop.name}}
-					{{redactShop.address}}
-					<button  (click)="onClose()" class='button black small'>close</button>
-				</div>
-			</div>
+				</li>
+			</ul>
+
 		</div>
 		
 		
@@ -69,12 +73,48 @@ export class AppComponent {
 	shops: Array<any> = [];
 	items: Array<any> = [];
 	constructor(
+		private dragulaService: DragulaService
 	) {
+		
 	}
 	ngOnInit() {
 		this.initShop();
-
+		this.dragulaService.drag.subscribe((value) => {
+			this.onDrag(value.slice(1));
+		  });
+		this.dragulaService.drop.subscribe((value) => {
+			this.onDrop(value.slice(1));
+		  });
 	}
+
+	private hasClass(el: any, name: string) {
+		return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(el.className);
+	  }
+	
+	  private addClass(el: any, name: string) {
+		if (!this.hasClass(el, name)) {
+		  el.className = el.className ? [el.className, name].join(' ') : name;
+		}
+	  }
+	
+	  private removeClass(el: any, name: string) {
+		if (this.hasClass(el, name)) {
+		  el.className = el.className.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
+		}
+	  }
+
+	private onDrag(args) {
+		let [e, el] = args;
+		this.removeClass(e, 'ex-moved');
+	  }
+	
+	  private onDrop(args) {
+		let [e, el] = args;
+		this.addClass(e, 'ex-moved');
+		console.log(e)
+		console.log(el)
+	  }
+
 	createShop() {
 		var id = 1;
 		var idRepeat = () => {

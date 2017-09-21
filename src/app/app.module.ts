@@ -4,9 +4,10 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent }  from './components/app.component';
 import { HttpModule }   from '@angular/http';
 import {Routes, RouterModule} from '@angular/router';
+import { DragulaModule } from 'ng2-dragula'
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,HttpModule],
+  imports:      [ BrowserModule, FormsModule,HttpModule, DragulaModule],
   declarations: [ AppComponent],
   bootstrap:    [ AppComponent ]
 })
